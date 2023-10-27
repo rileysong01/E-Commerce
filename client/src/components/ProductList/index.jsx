@@ -17,9 +17,8 @@ function ProductList() {
   const [state, dispatch] = useStoreContext();
 
   const { currentCategory } = state;
-  // console.log("currentCategory -->", currentCategory)
   const { loading, data } = useQuery(QUERY_PRODUCTS, {
-    variables: { categoryID: currentCategory || null }, // Pass null when "All" is selected
+    variables: { categoryID: currentCategory || null },
   });
 
 
@@ -52,42 +51,8 @@ function ProductList() {
     return state.products
   }
 
-  function quickSort(array, order) {
-    // sorts in ascending order
-    // escape case for small arrays, or no sorting order
-    if (array.length <= 1 || !order) {
-      return array;
-    }
-    const pivot = array.splice(Math.floor(Math.random() * array.length), 1);
-    const left = [];
-    const right = [];
-    array.forEach((el) => {
-      if (order == 'asc') {
-        if (el.price <= pivot.price) {
-          left.push(el);
-        } else {
-          right.push(el);
-        }
-      } else if (order == 'desc') {
-        if (el.price > pivot.price) {
-          left.push(el);
-        } else {
-          right.push(el);
-        }
-      } else if (order == 'new') {
-        // sort asc
-      } else if (order == 'old') {
-        // sort desc
-      }
-    });
-    return quickSort(left).concat(pivot, quickSort(right));
-  }
 
-  function sortProducts(products) {
-    // sorts an array of products based upon state.sort string
-    let sorted = quickSort(products, state.sort);
-    return sorted
-  }
+
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 

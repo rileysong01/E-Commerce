@@ -2,6 +2,7 @@ import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import AuthService from '../../utils/auth';
 import { Navbar, Nav } from 'react-bootstrap';
+import Cart from "../Cart";
 
 const isAdmin = AuthService.checkAdmin();
 
@@ -36,11 +37,6 @@ function MyNav() {
               Sales
             </Link>
           </Nav.Item>
-          <Nav.Item className="mx-1">
-            <Link to="/Search" className="nav-link">
-              Search
-            </Link>
-          </Nav.Item>
         </Nav>
       );
     } else {
@@ -66,11 +62,6 @@ function MyNav() {
               Sales
             </Link>
           </Nav.Item>
-          <Nav.Item className="mx-1">
-            <Link to="/Search" className="nav-link">
-              Search
-            </Link>
-          </Nav.Item>
         </Nav>
       );
     }
@@ -88,6 +79,7 @@ function MyNav() {
       <Navbar.Collapse id="basic-navbar-nav">
         {showNavigation()}
       </Navbar.Collapse>
+      {isAdmin ? null : <Cart /> }
     </Navbar>
   );
 }

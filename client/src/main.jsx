@@ -12,7 +12,6 @@ import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
 import Contact from './pages/Contact';
 import Sales from './pages/Sales';
-import Search from './pages/Search';
 import Cart from './pages/Cart';
 import ViewOrders from './pages/ViewOrders';
 
@@ -54,9 +53,6 @@ const router = createBrowserRouter([
       }, {
         path: '/sales',
         element: <Sales />
-      }, {
-        path: '/search',
-        element: <Search />
       }, {
         path: '/cart/:id',
         element: <Cart />
