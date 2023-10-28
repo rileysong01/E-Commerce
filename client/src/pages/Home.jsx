@@ -1,6 +1,7 @@
 import ProductList from "../components/ProductList";
 import CategoryMenu from "../components/CategoryMenu";
 import SearchBar from "../components/SearchBar";
+import ProductFilter from "../components/ProductFilter";
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -16,7 +17,10 @@ const Home = () => {
       </Col>
     </Row>
     <Row>
-      <Col>
+    <Col lg={3}>
+        <ProductFilter />
+      </Col>
+      <Col lg={9}>
         <ProductList />
       </Col>
     </Row>
