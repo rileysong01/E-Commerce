@@ -16,9 +16,10 @@ const isAdmin = AuthService.checkAdmin();
 function ProductList() {
   const [state, dispatch] = useStoreContext();
 
+ const [sortOrder, setSortOrder] = useState();
   const { currentCategory } = state;
   const { loading, data } = useQuery(QUERY_PRODUCTS, {
-    variables: { categoryID: currentCategory || null },
+    variables: { categoryID: currentCategory || null, sortOrder: sortOrder || null },
   });
 
 

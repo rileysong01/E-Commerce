@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Form, InputGroup, Dropdown, DropdownButton, FormCheck } from 'react-bootstrap';
 
-function ProductFilter() {
+function ProductFilter({ setPriceSortOrder }) {
     const [priceFilter, setPriceFilter] = useState(null);
     const [saleFilter, setSaleFilter] = useState(false);
 
     const handlePriceFilter = (eventKey) => {
         setPriceFilter(eventKey);
-        console.log('handlePriceFilter triggered', priceFilter);
+        if (eventKey === "priceLowToHigh") {
+            setPriceSortOrder("priceLowToHigh");
+          } else if (eventKey === "priceHighToLow") {
+            setPriceSortOrder("priceHighToLow");
+          }
     };
 
     const handleSaleFilter = (e) => {

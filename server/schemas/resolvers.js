@@ -41,20 +41,27 @@ const resolvers = {
       }
     },
 
-    products: async (parent, { categoryID }) => {
+    products: async (parent, { categoryID, sortOrder }) => {
       try {
+        const sortOptions = {};
+    
+        if (sortOrder === 'priceLowToHigh') {
+          sortOptions.price = 1; 
+        } else if (sortOrder === 'priceHighToLow') {
+          sortOptions.price = -1; 
+        }
+    
+        let query = { category: categoryID };
+    
         if (!categoryID) {
-
-          return await Product.find().populate('category');
+          query = {}; 
         }
-
-        const category = await Category.findById(categoryID);
-
-        if (!category) {
-          throw new Error('Category not found');
-        }
-
-        return await Product.find({ category: categoryID }).populate('category');
+    
+        const products = await Product.find(query)
+          .populate('category')
+          .sort(sortOptions); 
+    
+        return products;
       } catch (error) {
         throw new Error('Error fetching products by category');
       }

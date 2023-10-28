@@ -63,7 +63,7 @@ const typeDefs = gql `
     searchProducts(searchQuery: String!): [Product]
     categories: [Category]
     allProducts: [Product]
-    products(categoryID: ID): [Product]
+    products(categoryID: ID, sortOrder: String): [Product]
     product(_id: ID!): Product
     user: User
     viewOrders(shipped: Boolean, completed: Boolean): [Order]
