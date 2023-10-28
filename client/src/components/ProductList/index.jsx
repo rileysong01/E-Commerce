@@ -23,8 +23,7 @@ function ProductList() {
 
 
   useEffect(() => {
-    // console.log('loading:', loading);
-    // console.log('data:', data);
+
     if (data) {
       dispatch({
         type: UPDATE_PRODUCTS,
