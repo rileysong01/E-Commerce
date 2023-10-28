@@ -11,10 +11,6 @@ const StoreProvider = ({ value = [], ...props }) => {
     cartOpen: false,
     categories: [],
     currentCategory: '',
-    filter: '',
-    sort: '',
-    min: 0,
-    max: 100000,
 
   });
 

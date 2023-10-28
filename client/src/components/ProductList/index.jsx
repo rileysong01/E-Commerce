@@ -33,8 +33,6 @@ function ProductList() {
         idbPromise('products', 'put', product);
       });
 
-      // console.log("my data -->", data)
-      // console.log(data.products)
     } else if (!loading) {
       idbPromise('products', 'get').then((products) => {
         dispatch({
