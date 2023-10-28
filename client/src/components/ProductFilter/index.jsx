@@ -1,23 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, InputGroup, Dropdown, DropdownButton, FormCheck } from 'react-bootstrap';
+import { useStoreContext } from '../../utils/GlobalState';
+import { SET_PRICE_SORT_ORDER } from '../../utils/actions';
 
-function ProductFilter({ setPriceSortOrder }) {
-    const [priceFilter, setPriceFilter] = useState(null);
+function ProductFilter() {
+    const [state, dispatch] = useStoreContext();
+    const { priceSortOrder } = state; 
+    const [title, setTitle] = useState('Price'); 
     const [saleFilter, setSaleFilter] = useState(false);
 
     const handlePriceFilter = (eventKey) => {
-        setPriceFilter(eventKey);
-        if (eventKey === "priceLowToHigh") {
-            setPriceSortOrder("priceLowToHigh");
-          } else if (eventKey === "priceHighToLow") {
-            setPriceSortOrder("priceHighToLow");
-          }
-    };
+        dispatch({
+            type: SET_PRICE_SORT_ORDER,
+            payload: eventKey,
+        });
+        console.log('handlPriceFilter triggered', eventKey)
+    }
+    const handleSaleFilter = (eventKey) => {
+        console.log('sale filter triggered')
+    }
 
-    const handleSaleFilter = (e) => {
-        setSaleFilter(e.target.checked);
-        console.log('Sale filter:', e.target.checked);
-    };
+    useEffect(() => {
+        let newTitle = 'Price';
+        if (priceSortOrder === 'priceLowToHigh') {
+            newTitle = 'Price (low to high)';
+        } else if (priceSortOrder === 'priceHighToLow') {
+            newTitle = 'Price (high to low)';
+        }
+
+        // Update the title in the state
+        setTitle(newTitle);
+    }, [priceSortOrder]);
 
     return (
         <Form>
@@ -26,12 +39,12 @@ function ProductFilter({ setPriceSortOrder }) {
                 <InputGroup>
                     <DropdownButton
                         variant="outline-primary"
-                        title={priceFilter === null ? 'Price' : priceFilter}
+                        title={title} // Use the title from state
                         id="price-filter-dropdown"
                         onSelect={handlePriceFilter}
                     >
-                        <Dropdown.Item eventKey="price low to high">Price (low to high)</Dropdown.Item>
-                        <Dropdown.Item eventKey="price high to low">Price (high to low)</Dropdown.Item>
+                        <Dropdown.Item eventKey="priceLowToHigh">Price (low to high)</Dropdown.Item>
+                        <Dropdown.Item eventKey="priceHighToLow">Price (high to low)</Dropdown.Item>
                     </DropdownButton>
                 </InputGroup>
             </Form.Group>
@@ -47,6 +60,4 @@ function ProductFilter({ setPriceSortOrder }) {
     );
 }
 
-
 export default ProductFilter;
-

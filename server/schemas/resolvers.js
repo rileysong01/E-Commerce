@@ -41,13 +41,13 @@ const resolvers = {
       }
     },
 
-    products: async (parent, { categoryID, sortOrder }) => {
+    products: async (parent, { categoryID, priceSortOrder }) => {
       try {
         const sortOptions = {};
     
-        if (sortOrder === 'priceLowToHigh') {
+        if (priceSortOrder === 'priceLowToHigh') {
           sortOptions.price = 1; 
-        } else if (sortOrder === 'priceHighToLow') {
+        } else if (priceSortOrder === 'priceHighToLow') {
           sortOptions.price = -1; 
         }
     

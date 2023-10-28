@@ -8,10 +8,17 @@ import {
   UPDATE_CURRENT_CATEGORY,
   CLEAR_CART,
   TOGGLE_CART,
+  SET_PRICE_SORT_ORDER
 } from "./actions";
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    case SET_PRICE_SORT_ORDER:
+      return {
+        ...state,
+        priceSortOrder: action.payload,
+      };
+
     case UPDATE_PRODUCTS:
       return {
         ...state,

@@ -11,7 +11,7 @@ const StoreProvider = ({ value = [], ...props }) => {
     cartOpen: false,
     categories: [],
     currentCategory: '',
-    // priceSortOrder: null,
+    priceSortOrder: null,
 
   });
 

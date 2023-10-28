@@ -16,10 +16,9 @@ const isAdmin = AuthService.checkAdmin();
 function ProductList() {
   const [state, dispatch] = useStoreContext();
 
- const [sortOrder, setSortOrder] = useState();
-  const { currentCategory } = state;
+  const { currentCategory, priceSortOrder } = state;
   const { loading, data } = useQuery(QUERY_PRODUCTS, {
-    variables: { categoryID: currentCategory || null, sortOrder: sortOrder || null },
+    variables: { categoryID: currentCategory || null, priceSortOrder: priceSortOrder || null },
   });
 
 
@@ -41,11 +40,11 @@ function ProductList() {
           products: products,
         });
       });
-      // console.log("b ad data -->", data)
     }
   }, [data, loading, dispatch]);
 
   function filterProducts() {
+    console.log(state)
     return state.products
   }
 
