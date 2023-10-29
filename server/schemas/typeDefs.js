@@ -17,6 +17,7 @@ const typeDefs = gql `
     category: Category
     tags: [String]
     sale: Boolean
+    salePrice: Float
     dateAdded: String
   }
 
@@ -63,7 +64,7 @@ const typeDefs = gql `
     searchProducts(searchQuery: String!): [Product]
     categories: [Category]
     allProducts: [Product]
-    products(categoryID: ID, priceSortOrder: String, isOnSale: Boolean): [Product]
+    products(categoryID: ID, priceSortOrder: String): [Product]
     product(_id: ID!): Product
     user: User
     viewOrders(shipped: Boolean, completed: Boolean): [Order]
@@ -80,10 +81,9 @@ const typeDefs = gql `
     updateOrderCompleted(_id: ID!, completed: Boolean!): Order
     addProduct(name: String, author: [String], description: String, image: String, price: Float, quantity: Int, category: String, tags: [String], sale: Boolean): Product
     deleteProduct(_id: ID!): Product
-    updateProduct(_id: ID!, name: String, description: String, quantity: Int, price: Float, sale: Boolean): Product
+    updateProduct(_id: ID!, name: String, description: String, quantity: Int, price: Float, sale: Boolean, tags: [String], salePrice: Float): Product
     login(email: String!, password: String!): Auth
-    addTag(tagName: String!, productId: ID!):Product
-    deleteTag(tagName: String!, productId: ID!): Product
+
   }
 `;
 

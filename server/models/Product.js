@@ -42,6 +42,10 @@ const productSchema = new Schema({
     type: Boolean,
     default: false
   },
+  salePrice: {
+    type: Number,
+    default: null
+  },
   dateAdded: {
     type: String,
     default: Date.now

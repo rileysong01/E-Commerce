@@ -10,20 +10,15 @@ import { useStoreContext } from "../utils/GlobalState";
 import { useQuery } from '@apollo/client';
 import { QUERY_SALES } from '../utils/queries';
 
-// import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 
 const Sales = () => {
-    // console.log('hello')
+
     const [state, dispatch] = useStoreContext();
 
     const { loading, data } = useQuery(QUERY_SALES);
-    // console.log(data)
 
-    // setUpdatedProducts(updatedFilteredProducts);
-    //     }, [filterCriteria, saleProducts]);
     const products = data?.getSales || []
-    // console.log(products)
     return (
         <div className="sale-page">
             <h3>Books on 30% off:</h3>

@@ -12,7 +12,6 @@ function EditProductDetails({ currentProduct, refreshPage, closeEditModal }) {
     const [editedSale, setEditedSale] = useState(currentProduct.sale);
     const [editedTags, setEditedTags] = useState(currentProduct.tags.join(', '))
 
-    console.log(currentProduct.tags)
     const [updateProduct] = useMutation(UPDATE_PRODUCT_DETAILS);
 
     const handleNameChange = (e) => {
@@ -32,6 +31,7 @@ function EditProductDetails({ currentProduct, refreshPage, closeEditModal }) {
         setEditedSale(isOn);
     }
     const handleTagsChange = (e) => {
+        console.log(editedTags)
         setEditedTags(e.target.value);
     }
 
@@ -45,7 +45,8 @@ function EditProductDetails({ currentProduct, refreshPage, closeEditModal }) {
                 description: editedDescription,
                 price: parseFloat(editedPrice),
                 quantity: parseInt(editedQuantity),
-                sale: editedSale
+                sale: editedSale,
+                tags: editedTags
             },
         })
             .then((response) => {

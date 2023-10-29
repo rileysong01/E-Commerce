@@ -41,7 +41,7 @@ const resolvers = {
       }
     },
 
-    products: async (parent, { categoryID, priceSortOrder, isOnSale }) => {
+    products: async (parent, { categoryID, priceSortOrder }) => {
       try {
         const sortOptions = {};
     
@@ -55,10 +55,6 @@ const resolvers = {
     
         if (!categoryID) {
           query = {}; 
-        }
-
-        if (isOnSale) {
-          query.sale = true;
         }
     
         const products = await Product.find(query)
@@ -302,7 +298,7 @@ const resolvers = {
 
 
     // update product info // admin auth
-    updateProduct: async (parent, { _id, name, quantity, description, price, sale }, context) => {
+    updateProduct: async (parent, { _id, name, quantity, description, price, sale, tags, salePrice }, context) => {
       console.log('HELLO')
       if (context.user.admin) {
         try {
@@ -315,6 +311,8 @@ const resolvers = {
                 description: description !== undefined ? description : null,
                 price: price !== undefined ? price : null,
                 sale: sale !== undefined ? sale : null,
+                tags: tags !== undefined ? tags : null,
+                salePrice: salePrice !== undefined ? salePrice : null,
               },
             },
             { new: true }
@@ -331,47 +329,6 @@ const resolvers = {
         throw AuthenticationError
       }
     },
-    // add and remove tag admin auth
-    addTag: async (parent, { tagName, productID }, context) => {
-
-      if (context.user.admin) {
-        const updatedProduct = await Product.findByIdAndUpdate(
-          productID,
-          { $push: { tags: tagName } },
-          { new: true }
-        );
-
-        if (!updatedProduct) {
-          throw new Error('Product not found');
-        }
-
-        return updatedProduct;
-      } else {
-        throw AuthenticationError
-      }
-    },
-    deleteTag: async (parent, { tagName, productID }, context) => {
-      if (context.user.admin) {
-        try {
-          const product = await Product.findById(productID);
-          if (!product) {
-            throw new Error('Product not found');
-          }
-          const tagIndex = product.tags.indexOf(tagName);
-
-          if (tagIndex === -1) {
-            throw new Error('Tag not found in this product');
-          }
-          product.tags.splice(tagIndex, 1);
-
-          return await product.save();
-        } catch (err) {
-          throw err;
-        }
-      }
-      throw new AuthenticationError('Admin access required');
-    }
-
   }
 }
 
