@@ -27,8 +27,6 @@ function ProductFilter() {
         } else if (priceSortOrder === 'priceHighToLow') {
             newTitle = 'Price (high to low)';
         }
-
-        // Update the title in the state
         setTitle(newTitle);
     }, [priceSortOrder]);
 
