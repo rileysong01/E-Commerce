@@ -41,7 +41,7 @@ const resolvers = {
       }
     },
 
-    products: async (parent, { categoryID, priceSortOrder }) => {
+    products: async (parent, { categoryID, priceSortOrder, isOnSale }) => {
       try {
         const sortOptions = {};
     
@@ -55,6 +55,10 @@ const resolvers = {
     
         if (!categoryID) {
           query = {}; 
+        }
+
+        if (isOnSale) {
+          query.sale = true;
         }
     
         const products = await Product.find(query)

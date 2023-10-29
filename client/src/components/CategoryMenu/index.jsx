@@ -8,6 +8,7 @@ import {
 import { QUERY_CATEGORIES } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import AuthService from '../../utils/auth';
+import { Link } from "react-router-dom";
 
 const isAdmin = AuthService.checkAdmin();
 
@@ -45,35 +46,31 @@ function CategoryMenu() {
     });
   };
 
-  // console.log(categoryData)
-  
-
-  
 
   return (
     <div className='link'>
       {categories.map((item) => (
-        <button 
-        key={item._id}
+        <button
+          key={item._id}
           onClick={() => {
-           console.log(item._id)
-           handleClick(item._id);
+            console.log(item._id)
+            handleClick(item._id);
           }}
           style={{ margin: '10px' }}
-         >
+        >
           {item.name}
-         </button>
-       
-       ))}
-       <button onClick={() => { handleClick('') }}>
-         All
-       </button>
+        </button>
 
-      {isAdmin && (
-      <button>
-        Add Category
+      ))}
+      <button onClick={() => { handleClick('') }}>
+        All
       </button>
-    )}
+
+      <button>
+        <Link to="/sales" className="nav-link">
+          Sales
+        </Link>
+      </button>
     </div>
   );
 }

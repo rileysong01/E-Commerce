@@ -93,7 +93,6 @@ function ProductList() {
                 author={product.author}
                 price={product.price}
                 quantity={product.quantity}
-                style={{ margin: '10px' }}
               />
             ))}
           </div>
