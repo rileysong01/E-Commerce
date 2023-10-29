@@ -43,7 +43,7 @@ function ProductList() {
     }
   }, [data, loading, dispatch]);
 
-  function filterProducts() {
+  function filteredProducts() {
     console.log(state)
     return state.products
   }
@@ -84,7 +84,7 @@ function ProductList() {
       {state.products.length ? (
         <div className="flex-row">
           <div className="flex-row">
-            {filterProducts().map((product) => (
+            {filteredProducts().map((product) => (
               <ProductItem
                 key={product._id}
                 _id={product._id}
