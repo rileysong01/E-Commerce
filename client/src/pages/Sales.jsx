@@ -21,7 +21,6 @@ const Sales = () => {
     const products = data?.getSales || []
     return (
         <div className="sale-page">
-            <h3>Books on 30% off:</h3>
             
             <div className="flex-row product-list ">
  

@@ -53,11 +53,6 @@ function MyNav() {
               Contact Us
             </Link>
           </Nav.Item>
-          <Nav.Item className="mx-1">
-            <Link to="/sales" className="nav-link">
-              Sales
-            </Link>
-          </Nav.Item>
         </Nav>
       );
     }
