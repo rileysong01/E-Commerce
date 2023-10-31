@@ -60,7 +60,7 @@ const typeDefs = gql `
   }
 
   type Query {
-    getSales: [Product]
+    getSales(categoryID: ID, priceSortOrder: String): [Product]
     searchProducts(searchQuery: String!): [Product]
     categories: [Category]
     allProducts: [Product]
@@ -70,7 +70,6 @@ const typeDefs = gql `
     viewOrders(shipped: Boolean, completed: Boolean): [Order]
     order(_id: ID!): Order
     checkout(products: [ProductInput]): Checkout
-    # sortProducts(products: [Product], sort: String!, min: Int, max: Int): [Product]
   }
 
   type Mutation {

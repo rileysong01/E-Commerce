@@ -1,12 +1,9 @@
 // import CategoryMenu from "../components/CategoryMenu";
 import ProductItem from "../components/ProductItem";
-// import filterCriteria from  "../components/models";
-// import saleProducts from "../components/CategoryMenu"; 
-//import  image from "../client/public/images";
-
+import ProductFilter from "../components/ProductFilter";
 
 import { useStoreContext } from "../utils/GlobalState";
-// import { UPDATE_PRODUCTS } from '../utils/actions';
+import spinner from '../assets/spinner.gif'
 import { useQuery } from '@apollo/client';
 import { QUERY_SALES } from '../utils/queries';
 
@@ -16,11 +13,15 @@ const Sales = () => {
 
     const [state, dispatch] = useStoreContext();
 
-    const { loading, data } = useQuery(QUERY_SALES);
+    const { currentCategory, priceSortOrder } = state;
+    const { loading, data } = useQuery(QUERY_SALES, {
+      variables: { categoryID: currentCategory || null, priceSortOrder: priceSortOrder || null },
+    });
 
     const products = data?.getSales || []
     return (
         <div className="sale-page">
+            <ProductFilter/>
             
             <div className="flex-row product-list ">
  
@@ -34,6 +35,7 @@ const Sales = () => {
                          />)
                     
                 })} 
+                {loading ? <img src={spinner} alt="loading" /> : null}
                 
                 
             </div>

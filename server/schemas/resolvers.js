@@ -9,10 +9,34 @@ const { AuthenticationError } = require('apollo-server-express')
 const resolvers = {
   Query: {
     // get all sale items // no auth
-    getSales: async () => {
-      return await Product.find({
+    getSales: async (parent, { categoryID, priceSortOrder }) => {
+       Product.find({
         sale: true
       }).populate('category')
+
+      try {
+        const sortOptions = {};
+    
+        if (priceSortOrder === 'priceLowToHigh') {
+          sortOptions.price = 1; 
+        } else if (priceSortOrder === 'priceHighToLow') {
+          sortOptions.price = -1; 
+        }
+    
+        let query = { category: categoryID, sale: true };
+    
+        if (!categoryID) {
+          query = {sale: true}; 
+        }
+    
+        const products = await Product.find(query)
+          .populate('category')
+          .sort(sortOptions); 
+    
+        return products;
+      } catch (error) {
+        throw new Error('Error fetching products by category');
+      }
     },
 
     // search for product via query // no auth
@@ -26,7 +50,7 @@ const resolvers = {
       };
       return await Product.find(query).exec();
     },
-
+    
     // get all products for a category // no auth
     categories: async () => {
       return await Category.find();
