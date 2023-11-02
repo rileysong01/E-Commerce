@@ -25,9 +25,10 @@ const resolvers = {
     
         let query = { category: categoryID, sale: true };
     
-        if (!categoryID) {
-          query = {sale: true}; 
-        }
+        if (categoryID && categoryID.length > 0) {
+          // If categoryIDs are provided, include them in the query
+          query.category = { $in: categoryID };
+      }
     
         const products = await Product.find(query)
           .populate('category')

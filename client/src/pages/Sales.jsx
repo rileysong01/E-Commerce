@@ -5,9 +5,7 @@ import { useStoreContext } from "../utils/GlobalState";
 import spinner from '../assets/spinner.gif'
 import { useQuery } from '@apollo/client';
 import { QUERY_SALES, QUERY_CATEGORIES} from '../utils/queries';
-import {
-    UPDATE_CATEGORIES,
-  } from '../utils/actions';
+import { UPDATE_CATEGORIES } from '../utils/actions';
   import { idbPromise } from '../utils/helpers';
 import React from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
@@ -59,7 +57,10 @@ const Sales = () => {
                                 <Form.Check 
                                 key={item._id}
                                 type="checkbox" 
-                                label={item.name} /> 
+                                label={item.name}
+                                onClick={() => {
+                                    console.log(item._id)
+                                }} /> 
                         ))}
                          </Form.Group>
 

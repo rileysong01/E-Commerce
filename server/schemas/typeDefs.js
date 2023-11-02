@@ -60,7 +60,7 @@ const typeDefs = gql `
   }
 
   type Query {
-    getSales(categoryID: ID, priceSortOrder: String): [Product]
+    getSales(categoryID: [ID], priceSortOrder: String): [Product]
     searchProducts(searchQuery: String!): [Product]
     categories: [Category]
     allProducts: [Product]
