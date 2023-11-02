@@ -10,9 +10,6 @@ const resolvers = {
   Query: {
     // get all sale items // no auth
     getSales: async (parent, { categoryID, priceSortOrder }) => {
-       Product.find({
-        sale: true
-      }).populate('category')
 
       try {
         const sortOptions = {};
@@ -23,7 +20,7 @@ const resolvers = {
           sortOptions.price = -1; 
         }
     
-        let query = { category: categoryID, sale: true };
+        let query = {sale: true };
     
         if (categoryID && categoryID.length > 0) {
           // If categoryIDs are provided, include them in the query

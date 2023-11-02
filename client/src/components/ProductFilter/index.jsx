@@ -7,7 +7,6 @@ function ProductFilter() {
     const [state, dispatch] = useStoreContext();
     const { priceSortOrder } = state; 
     const [title, setTitle] = useState('Price'); 
-    const [saleFilter, setSaleFilter] = useState(false);
 
     const handlePriceFilter = (eventKey) => {
         dispatch({
@@ -16,10 +15,7 @@ function ProductFilter() {
         });
         console.log('handlPriceFilter triggered', eventKey)
     }
-    const handleSaleFilter = (eventKey) => {
-        console.log('sale filter triggered')
-    }
-
+  
     useEffect(() => {
         let newTitle = 'Price';
         if (priceSortOrder === 'priceLowToHigh') {
@@ -46,14 +42,7 @@ function ProductFilter() {
                     </DropdownButton>
                 </InputGroup>
             </Form.Group>
-            <Form.Group>
-                <FormCheck
-                    type="checkbox"
-                    label="On Sale"
-                    checked={saleFilter}
-                    onChange={handleSaleFilter}
-                />
-            </Form.Group>
+
         </Form>
     );
 }
