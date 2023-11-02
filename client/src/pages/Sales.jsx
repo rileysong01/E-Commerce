@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import ProductItem from "../components/ProductItem";
+import ProductFilter from "../components/ProductFilter";
+
 import { useStoreContext } from "../utils/GlobalState";
 import spinner from '../assets/spinner.gif'
 import { useQuery } from '@apollo/client';
-import { QUERY_SALES, QUERY_CATEGORIES } from '../utils/queries';
+import { QUERY_SALES, QUERY_CATEGORIES} from '../utils/queries';
 import { UPDATE_CATEGORIES } from '../utils/actions';
-import { idbPromise } from '../utils/helpers';
-import ProductFilter from "../components/ProductFilter";
-import ProductItem from "../components/ProductItem";
+  import { idbPromise } from '../utils/helpers';
+import React from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
+
+import { useState, useEffect } from 'react';
 
 const Sales = () => {
     const [categoryQuery, setCategoryQuery] = useState([]);
@@ -34,18 +37,13 @@ const Sales = () => {
             });
         }
     }, [categoryData, categoriesLoading, dispatch]);
-
-    const { loading: salesLoading, data, refetch } = useQuery(QUERY_SALES, {
+    
+    const { loading: salesLoading, data } = useQuery(QUERY_SALES, {
         variables: { categoryID: categoryQuery || null, priceSortOrder: priceSortOrder || null },
     });
 
     console.log(data);
     const products = data?.getSales || [];
-
-    useEffect(() => {
-        // This effect will refetch the QUERY_SALES every time categoryQuery changes
-        refetch();
-    }, [categoryQuery, refetch]);
 
     return (
         <Container fluid>
