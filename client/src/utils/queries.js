@@ -22,7 +22,7 @@ export const QUERY_PRODUCTS = gql`
 `;
 
 export const QUERY_SALES = gql`
-query Query($categoryId: ID, $priceSortOrder: String) {
+query Query($categoryId: [ID], $priceSortOrder: String) {
   getSales(categoryID: $categoryId, priceSortOrder: $priceSortOrder) {
     _id
     author

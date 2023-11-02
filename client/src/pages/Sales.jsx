@@ -13,7 +13,7 @@ import { Container, Row, Col, Form } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 
 const Sales = () => {
-    const currentCategory = '65406eb01a0751456cfc9fa5'
+    const [categoryQuery, setCategoryQuery] = useState([]);
 
     const [state, dispatch] = useStoreContext();
     const { categories } = state;
@@ -40,9 +40,10 @@ const Sales = () => {
 
     const { priceSortOrder } = state;
     const { loading: salesLoading, data } = useQuery(QUERY_SALES, {
-        variables: { categoryID: currentCategory || null, priceSortOrder: priceSortOrder || null },
+        variables: { categoryID: categoryQuery || null, priceSortOrder: priceSortOrder || null },
     });
 
+    console.log(data);
     const products = data?.getSales || [];
 
     return (
@@ -60,6 +61,12 @@ const Sales = () => {
                                 label={item.name}
                                 onClick={() => {
                                     console.log(item._id)
+                                    console.log(categoryQuery)
+                                    if (categoryQuery.includes(item._id)) {
+                                        setCategoryQuery(categoryQuery.filter(id => id !== item._id));
+                                    } else {
+                                        setCategoryQuery([...categoryQuery, item._id]);
+                                    }
                                 }} /> 
                         ))}
                          </Form.Group>
