@@ -6,10 +6,10 @@ import spinner from '../assets/spinner.gif'
 import { useQuery } from '@apollo/client';
 import { QUERY_SALES, QUERY_CATEGORIES} from '../utils/queries';
 import { UPDATE_CATEGORIES } from '../utils/actions';
-  import { idbPromise } from '../utils/helpers';
+import { idbPromise } from '../utils/helpers';
 import React from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
-
+import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 
 const Sales = () => {
@@ -49,6 +49,7 @@ const Sales = () => {
         <Container fluid>
             <Row>
                 <Col lg={3}>
+                    <Link to="/"> -- Back to home</Link>
                     <ProductFilter />
                     <Form>
                         Category:

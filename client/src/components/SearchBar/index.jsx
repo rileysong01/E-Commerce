@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 
-function Search() {
+function SearchBar() {
   // State to manage the search input value
   const [searchValue, setSearchValue] = useState('');
 
@@ -17,11 +18,14 @@ function Search() {
         value={searchValue}
         onChange={handleSearchChange}
       />
+      <Link to="/search">
       <button onClick={() => console.log('search button')}>
       <span role="img" aria-label="search">🔍</span>
       </button>
+      </Link>
+      
     </div>
   );
 }
 
-export default Search;
+export default SearchBar;

@@ -66,11 +66,13 @@ function CategoryMenu() {
         All
       </button>
 
-      <button>
-        <Link to="/sales" className="nav-link">
+
+      <Link to="/sales" >
+        <button>
           Sales
-        </Link>
-      </button>
+        </button>
+      </Link>
+
     </div>
   );
 }

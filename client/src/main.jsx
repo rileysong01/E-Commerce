@@ -14,6 +14,7 @@ import Contact from './pages/Contact';
 import Sales from './pages/Sales';
 import Cart from './pages/Cart';
 import ViewOrders from './pages/ViewOrders';
+import Search from './pages/Search';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery';
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       }, {
         path: '/cart/:id',
         element: <Cart />
+      }
+      , {
+        path: '/search',
+        element: <Search />
       }
     ]
   }
