@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
+import { useNavigate } from "react-router-dom";
 import { useStoreContext } from '../../utils/GlobalState';
 import {
   UPDATE_CATEGORIES,
@@ -13,11 +14,11 @@ import { Link } from "react-router-dom";
 const isAdmin = AuthService.checkAdmin();
 
 
-function CategoryMenu() {
+function CategoryMenu({ isOnSearchPage }) {
   const [state, dispatch] = useStoreContext();
 
   const { categories } = state;
-
+  const navigate = useNavigate();
   const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
   useEffect(() => {
@@ -53,7 +54,9 @@ function CategoryMenu() {
         <button
           key={item._id}
           onClick={() => {
-            console.log(item._id)
+            if(isOnSearchPage) {
+              navigate('/');
+            }
             handleClick(item._id);
           }}
           style={{ margin: '10px' }}

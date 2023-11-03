@@ -18,7 +18,7 @@ function SearchBar() {
         value={searchValue}
         onChange={handleSearchChange}
       />
-      <Link to="/search">
+      <Link to={`/search/:${searchValue}`}>
       <button onClick={() => console.log('search button')}>
       <span role="img" aria-label="search">🔍</span>
       </button>

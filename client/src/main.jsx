@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         element: <Cart />
       }
       , {
-        path: '/search',
+        path: '/search/:query',
         element: <Search />
       }
     ]
