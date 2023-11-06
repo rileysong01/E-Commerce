@@ -45,7 +45,7 @@ function AddProduct({ closeEditModal, refreshPage }) {
         setQuantity(e.target.value);
     };
     const handleCategoryChange = (e) => {
-        setCategory(e.target.value);
+        setSelectedCategory(e.target.value);
     };
     const handleTagsChange = (e) => {
         setTags(e.target.value);
@@ -64,7 +64,7 @@ function AddProduct({ closeEditModal, refreshPage }) {
                 author: author,
                 image: image,
                 description: description,
-                category: category,
+                category: selectedCategory,
                 price: parseFloat(price),
                 quantity: parseInt(quantity),
                 sale: sale,

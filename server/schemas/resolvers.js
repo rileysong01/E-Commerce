@@ -23,7 +23,6 @@ const resolvers = {
         let query = {sale: true };
     
         if (categoryID && categoryID.length > 0) {
-          // If categoryIDs are provided, include them in the query
           query.category = { $in: categoryID };
       }
     
