@@ -116,3 +116,24 @@ export const QUERY_ORDERS = gql`
     }
   }  
 `
+export const QUERY_SEARCH_PRODUCTS = gql`
+query searchProducts($searchQuery: String!) {
+  searchProducts(searchQuery: $searchQuery) {
+    _id
+    name
+    author
+    description
+    image
+    quantity
+    price
+    category {
+      _id
+      name
+    }
+    tags
+    sale
+    salePrice
+    dateAdded
+  }
+}
+`

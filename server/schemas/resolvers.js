@@ -46,7 +46,7 @@ const resolvers = {
           { tags: { $regex: searchQuery, $options: 'i' } }
         ]
       };
-      return await Product.find(query).exec();
+      return await Product.find(query).populate('category');
     },
     
     // get all products for a category // no auth
