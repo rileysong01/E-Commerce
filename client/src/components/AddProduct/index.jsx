@@ -19,7 +19,6 @@ function AddProduct({ closeEditModal, refreshPage }) {
     const [price, setPrice] = useState();
     const [image, setImage] = useState();
     const [quantity, setQuantity] = useState();
-    const [category, setCategory] = useState();
     const [tags, setTags] = useState();
     const [sale, setSale] = useState();
     const [selectedCategory, setSelectedCategory] = useState('');
