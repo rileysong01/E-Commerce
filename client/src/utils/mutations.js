@@ -119,8 +119,8 @@ mutation updateOrderShipped($id: ID!, $shipped: Boolean!){
 `;
 
 export const UPDATE_ORDER_COMPLETED = gql`
-mutation updateOrderShipped($id: ID!, $completed: Boolean!){
-  updateOrderShipped(_id: $id, completed: $completed) {
+mutation updateOrderCompleted($id: ID!, $completed: Boolean!){
+  updateOrderCompleted(_id: $id, completed: $completed) {
     _id
   }
 }

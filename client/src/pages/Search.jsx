@@ -15,7 +15,7 @@ function Search() {
       <Container fluid>
     <Row>
       <Col lg={9}>
-        <CategoryMenu />
+        <CategoryMenu isOnSearchPage={true}/>
       </Col>
       <Col lg={3}>
         <SearchBar />

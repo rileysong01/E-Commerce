@@ -1,25 +1,27 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { gql } from '@apollo/client'; 
+import { useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import { QUERY_ORDERS } from '../utils/queries';
+import { UPDATE_ORDER_COMPLETED, UPDATE_ORDER_SHIPPED } from '../utils/mutations';
 
 
 const initialFilters = {
-  filterOption: 'none', 
+  filterOption: 'none',
 };
 
 function ViewOrders() {
-  const [filters, setFilters] = useState(initialFilters); 
+  const [filters, setFilters] = useState(initialFilters);
   const { loading, error, data } = useQuery(QUERY_ORDERS, {
     variables: { shipped: filters.filterOption === 'shipped', completed: filters.filterOption === 'completed' },
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  const [updateOrderShipped] = useMutation(UPDATE_ORDER_SHIPPED);
+  const [updateOrderCompleted] = useMutation(UPDATE_ORDER_COMPLETED);
 
-  const orders = data.viewOrders;
+  const orders = data ? data.viewOrders : []; 
 
   function calculateTotal(products) {
     return products.reduce((total, product) => total + product.price, 0);
@@ -33,11 +35,26 @@ function ViewOrders() {
     });
   };
 
+
+  const handleShippedToggle = (orderId, newShippedValue) => {
+    updateOrderShipped({
+      variables: { id: orderId, shipped: newShippedValue },
+      refetchQueries: [{ query: QUERY_ORDERS }],
+    });
+  };
+
+  const handleCompletedToggle = (orderId, newCompletedValue) => {
+    console.log(newCompletedValue)
+    updateOrderCompleted({
+      variables: { id: orderId, completed: newCompletedValue },
+      refetchQueries: [{ query: QUERY_ORDERS }],
+    });
+  };
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
   return (
     <div>
       <h1>Order History</h1>
-
-      {/* Filter options */}
       <div>
         <label>
           <input
@@ -80,6 +97,7 @@ function ViewOrders() {
             <th>Total</th>
             <th>Shipped</th>
             <th>Completed</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -97,8 +115,17 @@ function ViewOrders() {
                 </ul>
               </td>
               <td>${calculateTotal(order.products)}</td>
-              <td>{order.shipped ? 'Yes' : 'No'}</td>
-              <td>{order.completed ? 'Yes' : 'No'}</td>
+              <td>
+                <label className="switch">
+                  <input type="checkbox" checked={order.shipped}  onChange={() => handleShippedToggle(order._id, !order.shipped)} />
+                </label>
+              </td>
+              <td>
+                <label className="switch">
+                  <input type="checkbox" checked={order.completed}  onChange={() => handleCompletedToggle(order._id, !order.completed)} />
+                </label>
+              </td>
+              <td></td>
             </tr>
           ))}
         </tbody>
