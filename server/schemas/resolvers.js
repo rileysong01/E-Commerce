@@ -184,25 +184,14 @@ const resolvers = {
           payment_method_types: ['card'],
           line_items,
           mode: 'payment',
-          success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+          success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}&orderItems=${encodeURIComponent(JSON.stringify(orderItems))}`,
           cancel_url: `${url}/`,
         });
 
-        if (session) {
-
-          const order = await Order.create({ products: orderItems });
-          await User.findByIdAndUpdate(context.user._id, {
-            $push: { orders: order._id },
-          });
-    
-
-          return { session: session.id };
-        } else {
-
-          throw new Error('Stripe checkout session creation failed.');
-        }
+        return { session: session.id, orderItems};
+      
       } catch (error) {
-
+        // Handle any errors that occur during the checkout process
         console.error('Checkout error:', error);
         throw new Error('Checkout failed.');
       }
@@ -220,14 +209,12 @@ const resolvers = {
 
     // create and associate new order with a user // user auth
     addOrder: async (parent, args, context) => {
-      console.log(context)
-      console.log('PLEASE bruh----->', context.orderItems)
+ 
       if (context.user) {
-        const order = await Order.create(context.orderItems)
+        const order = await Order.create({products: args.orderItems})
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order._id }
         });
-        // delete context.orderItems;
         return order;
       }
 
