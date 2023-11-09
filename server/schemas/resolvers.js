@@ -160,12 +160,11 @@ const resolvers = {
 
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
-      const createdOrder = await Order.create({ products: args.products.map(({ _id }) => _id) });
+      const orderItems = args.products.map(({ _id }) => _id)
+      console.log(orderItems)
+      context.orderItems = orderItems;
 
-      await User.findByIdAndUpdate(context.user._id, {
-        $push: { orders: createdOrder._id }
-      });
-
+      console.log(context.orderItems)
       const line_items = [];
 
       for (const product of args.products) {
@@ -204,12 +203,15 @@ const resolvers = {
     },
 
     // create and associate new order with a user // user auth
-    addOrder: async (parent, { products }, context) => {
+    addOrder: async (parent, args, context) => {
+
+      console.log('PLEASE ----->', context.orderItems)
       if (context.user) {
-        const order = new Order({ products });
-
-        await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
-
+        const order = await Order.create(context.orderItems)
+        await User.findByIdAndUpdate(context.user._id, {
+          $push: { orders: order._id }
+        });
+        delete context.orderItems;
         return order;
       }
 
