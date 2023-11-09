@@ -13,23 +13,23 @@ const resolvers = {
 
       try {
         const sortOptions = {};
-    
+
         if (priceSortOrder === 'priceLowToHigh') {
-          sortOptions.price = 1; 
+          sortOptions.price = 1;
         } else if (priceSortOrder === 'priceHighToLow') {
-          sortOptions.price = -1; 
+          sortOptions.price = -1;
         }
-    
-        let query = {sale: true };
-    
+
+        let query = { sale: true };
+
         if (categoryID && categoryID.length > 0) {
           query.category = { $in: categoryID };
-      }
-    
+        }
+
         const products = await Product.find(query)
           .populate('category')
-          .sort(sortOptions); 
-    
+          .sort(sortOptions);
+
         return products;
       } catch (error) {
         throw new Error('Error fetching products by category');
@@ -47,7 +47,7 @@ const resolvers = {
       };
       return await Product.find(query).populate('category');
     },
-    
+
     // get all products for a category // no auth
     categories: async () => {
       return await Category.find();
@@ -65,23 +65,23 @@ const resolvers = {
     products: async (parent, { categoryID, priceSortOrder }) => {
       try {
         const sortOptions = {};
-    
+
         if (priceSortOrder === 'priceLowToHigh') {
-          sortOptions.price = 1; 
+          sortOptions.price = 1;
         } else if (priceSortOrder === 'priceHighToLow') {
-          sortOptions.price = -1; 
+          sortOptions.price = -1;
         }
-    
+
         let query = { category: categoryID };
-    
+
         if (!categoryID) {
-          query = {}; 
+          query = {};
         }
-    
+
         const products = await Product.find(query)
           .populate('category')
-          .sort(sortOptions); 
-    
+          .sort(sortOptions);
+
         return products;
       } catch (error) {
         throw new Error('Error fetching products by category');
@@ -100,13 +100,13 @@ const resolvers = {
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
-        .populate({
-          path: 'orders',
-          populate: {
-            path: 'products',
-            model: 'Product' 
-          }
-        });
+          .populate({
+            path: 'orders',
+            populate: {
+              path: 'products',
+              model: 'Product'
+            }
+          });
 
         user.orders
         //.sort((a, b) => b.purchaseDate - a.purchaseDate);
@@ -129,8 +129,8 @@ const resolvers = {
           } else if (shipped && completed) {
             return await Order.find({ shipped: true, completed: true }).populate('product')
           } else {
-            
-            const data= await Order.find().populate('products')
+
+            const data = await Order.find().populate('products')
             console.log(data)
             return data
           }
@@ -139,8 +139,8 @@ const resolvers = {
           throw err;
         }
       } else {
-          throw AuthenticationError;
-        } 
+        throw AuthenticationError;
+      }
     },
 
 
@@ -159,39 +159,55 @@ const resolvers = {
     },
 
     checkout: async (parent, args, context) => {
-      const url = new URL(context.headers.referer).origin;
-      const orderItems = args.products.map(({ _id }) => _id)
-      console.log(orderItems)
-      context.orderItems = orderItems;
-
-      console.log(context.orderItems)
-      const line_items = [];
-
-      for (const product of args.products) {
-        line_items.push({
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: product.name,
-              description: product.description,
-              images: [`${url}/images/${product.image}`]
+      try {
+        const url = new URL(context.headers.referer).origin;
+        const orderItems = args.products.map(({ _id }) => _id);
+        console.log(orderItems)
+        const line_items = [];
+    
+        for (const product of args.products) {
+          line_items.push({
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: product.name,
+                description: product.description,
+                images: [`${url}/images/${product.image}`],
+              },
+              unit_amount: product.price * 100,
             },
-            unit_amount: product.price * 100,
-          },
-          quantity: product.purchaseQuantity,
+            quantity: product.purchaseQuantity,
+          });
+        }
+    
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          line_items,
+          mode: 'payment',
+          success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${url}/`,
         });
+
+        if (session) {
+
+          const order = await Order.create({ products: orderItems });
+          await User.findByIdAndUpdate(context.user._id, {
+            $push: { orders: order._id },
+          });
+    
+
+          return { session: session.id };
+        } else {
+
+          throw new Error('Stripe checkout session creation failed.');
+        }
+      } catch (error) {
+
+        console.error('Checkout error:', error);
+        throw new Error('Checkout failed.');
       }
-
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items,
-        mode: 'payment',
-        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`,
-      });
-
-      return { session: session.id };
     },
+    
   },
 
   Mutation: {
@@ -204,14 +220,14 @@ const resolvers = {
 
     // create and associate new order with a user // user auth
     addOrder: async (parent, args, context) => {
-
-      console.log('PLEASE ----->', context.orderItems)
+      console.log(context)
+      console.log('PLEASE bruh----->', context.orderItems)
       if (context.user) {
         const order = await Order.create(context.orderItems)
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order._id }
         });
-        delete context.orderItems;
+        // delete context.orderItems;
         return order;
       }
 
