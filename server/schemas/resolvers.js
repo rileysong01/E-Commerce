@@ -158,14 +158,16 @@ const resolvers = {
       throw AuthenticationError;
     },
 
-    // checkout with everything in cart // user auth
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
-      await Order.create({ products: args.products.map(({ _id }) => _id) });
-      // eslint-disable-next-line camelcase
+      const createdOrder = await Order.create({ products: args.products.map(({ _id }) => _id) });
+
+      await User.findByIdAndUpdate(context.user._id, {
+        $push: { orders: createdOrder._id }
+      });
+
       const line_items = [];
 
-      // eslint-disable-next-line no-restricted-syntax
       for (const product of args.products) {
         line_items.push({
           price_data: {
