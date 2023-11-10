@@ -1,51 +1,66 @@
 import { Link } from 'react-router-dom';
-
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
+import { Container, Card, Row, Col } from 'react-bootstrap';
 
 function OrderHistory() {
   const { data } = useQuery(QUERY_USER);
   let user;
 
+  function calculateTotal(products) {
+    return products.reduce((total, product) => total + product.price, 0);
+  }
+
+  function getStatus(order) {
+    if (!order.shipped && !order.completed) {
+      return 'Processing';
+    } else if (order.shipped && !order.completed) {
+      return 'Shipped';
+    } else if (order.completed) {
+      return 'Completed';
+    } else {
+      return '';
+    }
+  }
+
   if (data) {
     user = data.user;
-    console.log(user)
+    console.log(user);
   }
 
   return (
-    <>
-      <div className="container my-1">
-        <Link to="/">← Back to Products</Link>
+    <Container className="my-1">
+      <Link to="/">← Back to Products</Link>
 
-        {user ? (
-          <>
-            <h2>
-              View All Orders
-            </h2>
-            {user.orders.map((order) => (
-              <div key={order._id} className="my-2">
-                <h3>
-                  {new Date(parseInt(order.purchaseDate)).toLocaleDateString()}
-                </h3>
-                <div className="flex-row">
-                  {order.products.map(({ _id, image, name, price }, index) => (
-                    <div key={index} className="card px-1 py-1">
+      {user ? (
+        <>
+          <h2>View All Orders</h2>
+          {user.orders.map((order) => (
+            <div key={order._id} className="my-2">
+              <h3>{new Date(parseInt(order.purchaseDate)).toLocaleDateString()}</h3>
+              <Row className="flex-row">
+                {order.products.map(({ _id, image, name, price }, index) => (
+                  <Col key={index} xs={12} md={4} lg={3} className="mb-3">
+                    <Card>
                       <Link to={`/products/${_id}`}>
-                        <img alt={name} src={`/images/${image}`} />
-                        <p>{name}</p>
+                        <Card.Img variant="top" src={image} alt={name} />
+                        <Card.Body>
+                          <Card.Title>{name}</Card.Title>
+                          <Card.Text>${price}</Card.Text>
+                        </Card.Body>
                       </Link>
-                      <div>
-                        <span>${price}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </>
-        ) : null}
-      </div>
-    </>
+                    </Card>
+                    Order ID: {order._id}
+                    ${calculateTotal(order.products)}
+                    Status: {getStatus(order)}
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          ))}
+        </>
+      ) : null}
+    </Container>
   );
 }
 

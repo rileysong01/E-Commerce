@@ -100,16 +100,13 @@ const resolvers = {
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
-          .populate({
-            path: 'orders',
-            populate: {
-              path: 'products',
-              model: 'Product'
-            }
-          });
-
-        user.orders
-        //.sort((a, b) => b.purchaseDate - a.purchaseDate);
+        .populate({
+          path: 'orders',
+          populate: {
+            path: 'products',
+            model: 'Product',
+          },
+        })
 
         return user;
       }
@@ -215,7 +212,7 @@ const resolvers = {
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order._id }
         });
-        return order;
+        return order._id;
       }
 
       throw AuthenticationError;

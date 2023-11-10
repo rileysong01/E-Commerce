@@ -15,6 +15,7 @@ import Sales from './pages/Sales';
 import Cart from './pages/Cart';
 import ViewOrders from './pages/ViewOrders';
 import Search from './pages/Search';
+import OrderConfirmation from './pages/OrderConfirmation';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery';
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       , {
         path: '/search/:query',
         element: <Search />
+      }
+      , {
+        path: '/orderconfirmation/:orderID',
+        element: <OrderConfirmation />
       }
     ]
   }

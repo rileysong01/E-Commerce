@@ -68,8 +68,9 @@ const typeDefs = gql `
     product(_id: ID!): Product
     user: User
     viewOrders(shipped: Boolean, completed: Boolean): [Order]
-    order(_id: ID!): Order
+    order(_id: ID!): ID
     checkout(products: [ProductInput]): Checkout
+    getNewOrder: Order
   }
 
   type Mutation {

@@ -95,6 +95,8 @@ export const QUERY_USER = gql`
           quantity
           image
         }
+        shipped
+        completed
       }
     }
   }

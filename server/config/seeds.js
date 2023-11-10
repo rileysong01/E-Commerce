@@ -331,11 +331,11 @@ db.once('open', async () => {
   });
 
   await User.create({
-    firstName: 'Elijah',
-    lastName: 'Holt',
-    email: 'eholt@testmail.com',
-    password: 'password12345',
-    orders: [orders[2]._id],
+    firstName: 'riley',
+    lastName: 'riley',
+    email: 'riley@rileymail.com',
+    password: 'riley',
+    orders: [],
   });
 
   await User.create({
