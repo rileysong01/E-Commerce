@@ -353,6 +353,39 @@ const resolvers = {
         throw AuthenticationError
       }
     },
+    addCategory: async (parent, { name }, context) => {
+      if (context.user.admin) {
+      try {
+        // Create a new category
+        const newCategory = await Category.create({ name });
+
+        return newCategory;
+      } catch (error) {
+        throw new Error(`Error adding category: ${error.message}`);
+      }
+    } else {
+      throw AuthenticationError
+    }
+    },
+
+    deleteCategory: async (parent, { categoryId }, context) => {
+      if (context.user.admin) {
+      try {
+        // Find the category by ID and remove it
+        const deletedCategory = await Category.findByIdAndRemove(categoryId);
+
+        if (!deletedCategory) {
+          throw new Error('Category not found');
+        }
+
+        return `Category "${deletedCategory.name}" has been deleted successfully.`;
+      } catch (error) {
+        throw new Error(`Error deleting category: ${error.message}`);
+      }
+    } else {
+      throw AuthenticationError
+    }
+    },
   }
 }
 
