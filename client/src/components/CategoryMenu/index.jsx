@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useEffect, useState } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
 import { useNavigate } from "react-router-dom";
 import { useStoreContext } from '../../utils/GlobalState';
 import {
@@ -10,6 +10,7 @@ import { QUERY_CATEGORIES } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import AuthService from '../../utils/auth';
 import { Link } from "react-router-dom";
+import { ADD_CATEGORY } from '../../utils/mutations';
 
 const isAdmin = AuthService.checkAdmin();
 
@@ -20,6 +21,8 @@ function CategoryMenu({ isOnSearchPage }) {
   const { categories } = state;
   const navigate = useNavigate();
   const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [addCategory] = useMutation(ADD_CATEGORY);
 
   useEffect(() => {
     if (categoryData) {
@@ -47,37 +50,67 @@ function CategoryMenu({ isOnSearchPage }) {
     });
   };
 
+  const handleAddCategory = async () => {
+    if (newCategoryName.trim() !== '') {
+      const { data } = await addCategory({
+        variables: {
+          name: newCategoryName,
+        },
+      });
+      const newCategory = data.addCategory;
+
+      console.log('New category added:', newCategory);
+      dispatch({
+        type: UPDATE_CATEGORIES,
+        categories: [...categories, newCategory],
+      });
+      idbPromise('categories', 'put', [...categories, newCategory]);
+      setNewCategoryName('');
+    }
+  };
+
 
   return (
-    <div className='link'>
-      {categories.map((item) => (
-        <button
-          key={item._id}
-          onClick={() => {
-            if(isOnSearchPage) {
-              navigate('/');
-            }
-            handleClick(item._id);
-          }}
-          style={{ margin: '10px' }}
-        >
-          {item.name}
+    <>
+      <div className='link'>
+        {categories.map((item) => (
+          <button
+            key={item._id}
+            onClick={() => {
+              if (isOnSearchPage) {
+                navigate('/');
+              }
+              handleClick(item._id);
+            }}
+            style={{ margin: '10px' }}
+          >
+            {item.name}
+          </button>
+        ))}
+        <button onClick={() => { handleClick('') }}>
+          All
         </button>
-
-      ))}
-      <button onClick={() => { handleClick('') }}>
-        All
-      </button>
-
-
-      <Link to="/sales" >
-        <button>
-          Sales
-        </button>
-      </Link>
-
-    </div>
+        <Link to="/sales">
+          <button>
+            Sales
+          </button>
+        </Link>
+        {isAdmin ? (
+          <>
+            <input
+              type="text"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+            />
+            <button onClick={handleAddCategory}>
+              +
+            </button>
+          </>
+        ) : null}
+      </div>
+    </>
   );
+  
 }
 
 export default CategoryMenu;
