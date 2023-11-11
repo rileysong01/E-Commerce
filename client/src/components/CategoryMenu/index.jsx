@@ -73,23 +73,33 @@ function CategoryMenu({ isOnSearchPage }) {
   return (
     <>
       <div className='link'>
-        {categories.map((item) => (
-          <button
-            key={item._id}
-            onClick={() => {
-              if (isOnSearchPage) {
-                navigate('/');
-              }
-              handleClick(item._id);
-            }}
-            style={{ margin: '10px' }}
-          >
-            {item.name}
-          </button>
-        ))}
         <button onClick={() => { handleClick('') }}>
           All
         </button>
+        {categories.map((item) => (
+          <div key={item._id} style={{ display: 'flex', alignItems: 'center' }}>
+            <button
+              onClick={() => {
+                if (isOnSearchPage) {
+                  navigate('/');
+                }
+                handleClick(item._id);
+              }}
+              style={{ margin: '10px' }}
+            >
+              {item.name}
+            </button>
+
+            {isAdmin && (
+              <>
+                <button>
+                  del
+                </button>
+              </>
+            )}
+          </div>
+        ))}
+
         <Link to="/sales">
           <button>
             Sales
@@ -110,7 +120,7 @@ function CategoryMenu({ isOnSearchPage }) {
       </div>
     </>
   );
-  
+
 }
 
 export default CategoryMenu;
