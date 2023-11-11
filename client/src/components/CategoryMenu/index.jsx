@@ -10,7 +10,8 @@ import { QUERY_CATEGORIES } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import AuthService from '../../utils/auth';
 import { Link } from "react-router-dom";
-import { ADD_CATEGORY } from '../../utils/mutations';
+import { ADD_CATEGORY, DELETE_CATEGORY } from '../../utils/mutations';
+
 
 const isAdmin = AuthService.checkAdmin();
 
@@ -20,9 +21,10 @@ function CategoryMenu({ isOnSearchPage }) {
 
   const { categories } = state;
   const navigate = useNavigate();
-  const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
+  const { loading, data: categoryData, refetch } = useQuery(QUERY_CATEGORIES);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [addCategory] = useMutation(ADD_CATEGORY);
+  const [deleteCategory] = useMutation(DELETE_CATEGORY)
 
   useEffect(() => {
     if (categoryData) {
@@ -69,37 +71,45 @@ function CategoryMenu({ isOnSearchPage }) {
     }
   };
 
+  const handleDeleteCategory = async (categoryID) => {
+  const {data} = await deleteCategory({
+    variables: {
+      categoryId: categoryID
+    }
+  })
+  console.log('deleted' + data.deleteCategory)
+  refetch();
+  }
 
   return (
     <>
       <div className='link'>
-        <button onClick={() => { handleClick('') }}>
+      <button onClick={() => { handleClick('') }}>
           All
         </button>
         {categories.map((item) => (
-          <div key={item._id} style={{ display: 'flex', alignItems: 'center' }}>
-            <button
-              onClick={() => {
-                if (isOnSearchPage) {
-                  navigate('/');
-                }
-                handleClick(item._id);
-              }}
-              style={{ margin: '10px' }}
-            >
-              {item.name}
-            </button>
-
-            {isAdmin && (
+          <button
+            key={item._id}
+            onClick={() => {
+              if (isOnSearchPage) {
+                navigate('/');
+              }
+              handleClick(item._id);
+            }}
+            style={{ margin: '10px' }}
+          >
+            {item.name}
+            {isAdmin ? (
               <>
-                <button>
-                  del
-                </button>
+              <button  onClick={(e) => {
+              e.stopPropagation(); 
+              handleDeleteCategory(item._id);}}>
+              <i className="fas fa-trash-alt"></i>
+              </button>
               </>
-            )}
-          </div>
+            ) : null}
+          </button>
         ))}
-
         <Link to="/sales">
           <button>
             Sales
@@ -120,7 +130,7 @@ function CategoryMenu({ isOnSearchPage }) {
       </div>
     </>
   );
-
+  
 }
 
 export default CategoryMenu;

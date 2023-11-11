@@ -123,4 +123,12 @@ mutation addCategory($name: String!) {
     name
   }
 }
-`
+`;
+
+export const DELETE_CATEGORY = gql `
+mutation deleteCategory($categoryId: ID!) {
+  deleteCategory(categoryId: $categoryId) {
+    _id
+  }
+}
+`;

@@ -19,6 +19,8 @@ import OrderConfirmation from './pages/OrderConfirmation';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 
 const router = createBrowserRouter([

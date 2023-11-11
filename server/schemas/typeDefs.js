@@ -74,7 +74,7 @@ const typeDefs = gql `
   }
 
   type Mutation {
-    deleteCategory(categoryId: ID!): String
+    deleteCategory(categoryId: ID!): Category
     addCategory(name: String!): Category
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     addOrder(orderItems: [String]): Order
