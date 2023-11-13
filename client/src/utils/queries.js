@@ -119,8 +119,8 @@ export const QUERY_ORDERS = gql`
   }  
 `
 export const QUERY_SEARCH_PRODUCTS = gql`
-query searchProducts($searchQuery: String!) {
-  searchProducts(searchQuery: $searchQuery) {
+query searchProducts($searchQuery: String!, $priceSortOrder: String) {
+  searchProducts(searchQuery: $searchQuery, priceSortOrder: $priceSortOrder) {
     _id
     name
     author

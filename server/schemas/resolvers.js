@@ -37,7 +37,7 @@ const resolvers = {
     },
 
     // search for product via query // no auth
-    searchProducts: async (parent, { searchQuery }) => {
+    searchProducts: async (parent, { searchQuery, priceSortOrder }) => {
       const query = {
         $or: [
           { name: { $regex: searchQuery, $options: 'i' } },
@@ -45,7 +45,15 @@ const resolvers = {
           { tags: { $regex: searchQuery, $options: 'i' } }
         ]
       };
-      return await Product.find(query).populate('category');
+      const sortOptions = {}
+
+      if (priceSortOrder === 'priceLowToHigh') {
+        sortOptions.price = 1;
+      } else if (priceSortOrder === 'priceHighToLow') {
+        sortOptions.price = -1;
+      }
+    
+      return Product.find(query).populate('category').sort(sortOptions);
     },
 
     // get all products for a category // no auth

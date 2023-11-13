@@ -61,7 +61,7 @@ const typeDefs = gql `
 
   type Query {
     getSales(categoryID: [ID], priceSortOrder: String): [Product]
-    searchProducts(searchQuery: String!): [Product]
+    searchProducts(searchQuery: String!, priceSortOrder: String): [Product]
     categories: [Category]
     allProducts: [Product]
     products(categoryID: ID, priceSortOrder: String): [Product]
