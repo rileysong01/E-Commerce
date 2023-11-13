@@ -17,10 +17,10 @@ const isAdmin = AuthService.checkAdmin();
 function SearchProductList({searchQuery}) {
   const [state, dispatch] = useStoreContext();
 
-
+const {priceSortOrder} = state;
   console.log(searchQuery)
   const { loading, data } = useQuery(QUERY_SEARCH_PRODUCTS, {
-    variables: { searchQuery: searchQuery || null},
+    variables: { searchQuery: searchQuery || null, priceSortOrder: priceSortOrder},
   });
 
 

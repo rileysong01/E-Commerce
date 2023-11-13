@@ -21,6 +21,7 @@ function ProductList() {
     variables: { categoryID: currentCategory || null, priceSortOrder: priceSortOrder || null },
   });
 
+  
 
   useEffect(() => {
 
