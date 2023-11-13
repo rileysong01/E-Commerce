@@ -59,11 +59,11 @@ function MyNav() {
   }
 
   return (
-    <Navbar style={{ backgroundColor: '#9DC888' }} expand="lg">
+    <Navbar style={{ backgroundColor: '#ffc8dd', fontFamily: "'M PLUS Rounded 1c', sans-serif" }} expand="lg">
       <Navbar.Brand>
         <Link to="/" className="nav-link">
-          <span role="img" aria-label="shopping bag">🛍️</span>
-          UFTShop
+        <i className="fas fa-book" aria-hidden="true"></i>
+          UofTShops
         </Link>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />

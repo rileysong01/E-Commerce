@@ -8,7 +8,6 @@ import Auth from '../../utils/auth';
 import { useStoreContext } from '../../utils/GlobalState';
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
 import './style.css';
-import decode from 'jwt-decode';
 
 
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
@@ -66,7 +65,7 @@ const Cart = () => {
       return x;
     })
     getCheckout({
-      variables: { 
+      variables: {
         products: newCart,
       },
     });
@@ -75,18 +74,16 @@ const Cart = () => {
   if (!state.cartOpen) {
     return (
       <div className="cart-closed" onClick={toggleCart}>
-        <span role="img" aria-label="trash">
-          🛒
-        </span>
+        <i className="fas fa-shopping-cart" aria-hidden="true"></i>
       </div>
     );
   }
 
   return (
     <div className="cart">
-      <div className="close" onClick={toggleCart}>
-        [close]
-      </div>
+      <button className="close" onClick={toggleCart} style={{ fontSize: '30px' }}>
+      <i className="fas fa-times"></i>
+      </button>
       <h2>Shopping Cart</h2>
       {state.cart.length ? (
         <div>

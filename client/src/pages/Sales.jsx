@@ -75,20 +75,20 @@ const Sales = () => {
                     </Form>
                 </Col>
                 <Col lg={9} >
-                    <div className="flex-row" >
-                        {products.map((product) => {
-                            return (<ProductItem key={product._id}
-                                _id={product._id}
-                                image={product.image}
-                                name={product.name}
-                                author={product.author}
-                                price={product.price}
-                                quantity={product.quantity}
-                            />)
-
-                        })}
-                        {salesLoading ? <img src={spinner} alt="loading" /> : null}
-                    </div>
+                <Row className="flex-row">
+        {products.map((product) => (
+          <Col key={product._id} xs={12} sm={6} md={4} lg={3}>
+            <ProductItem
+              _id={product._id}
+              image={product.image}
+              name={product.name}
+              author={product.author}
+              price={product.price}
+              quantity={product.quantity}
+            />
+          </Col>
+        ))}
+      </Row>
                 </Col>
             </Row>
         </Container>

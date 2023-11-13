@@ -84,8 +84,12 @@ function CategoryMenu({ isOnSearchPage }) {
   return (
     <>
       <div className='link'>
-      <button onClick={() => { handleClick('') }}>
-          All
+      <button onClick={() => { handleClick('') }}
+      style={{
+        margin: '10px',
+        fontFamily: "'M PLUS Rounded 1c', sans-serif", 
+      }}>
+          ALL
         </button>
         {categories.map((item) => (
           <button
@@ -96,9 +100,12 @@ function CategoryMenu({ isOnSearchPage }) {
               }
               handleClick(item._id);
             }}
-            style={{ margin: '10px' }}
+            style={{
+              margin: '10px',
+              fontFamily: "'M PLUS Rounded 1c', sans-serif", 
+            }}
           >
-            {item.name}
+            {(item.name).toUpperCase()}
             {isAdmin ? (
               <>
               <button  onClick={(e) => {
@@ -111,8 +118,12 @@ function CategoryMenu({ isOnSearchPage }) {
           </button>
         ))}
         <Link to="/sales">
-          <button>
-            Sales
+          <button
+          style={{
+            margin: '10px',
+            fontFamily: "'M PLUS Rounded 1c', sans-serif", 
+          }}>
+            SALES
           </button>
         </Link>
         {isAdmin ? (

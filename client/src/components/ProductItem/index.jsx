@@ -19,6 +19,7 @@ function ProductItem(item) {
 
   const { cart } = state
 
+
   const addToCart = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === _id)
     if (itemInCart) {
@@ -43,17 +44,32 @@ function ProductItem(item) {
   return (
     <div className="card px-1 py-1" style={{ textAlign: 'center' }}>
       <Link to={`/products/${_id}`} style={{ textDecoration: 'none', color: 'black' }}>
-        <img className="product-image" 
-          alt={name}
-          src={`${image}`}
-          style={{ display: 'block', margin: '0 auto' }}
-        />
-        <p style={{ marginTop: '10px' }}>{name}</p>
-        <p p style={{ fontSize: '16px' }}>By: {author}</p>
+        <div style={{ position: 'relative', width: '100%', paddingTop: '150%' }}>
+          <img
+            className="product-image"
+            alt={name}
+            src={`${image}`}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+        <p style={{
+          marginTop: '10px',
+          marginBottom: '0px',
+          fontSize: '18px',
+          height: '40px',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          display: '-webkit-box',
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical',
+          whiteSpace: 'normal',  
+          lineHeight:'19px'
+        }}>
+          {name}
+        </p>
       </Link>
       <div>
-        <div>{quantity} {pluralize("item", quantity)} in stock</div>
-        <span>${price}</span>
+      <p style={{ fontSize: '17px', marginBottom: '10px' }}>${price}</p>
       </div>
       <button onClick={addToCart}>Add to cart</button>
     </div>
