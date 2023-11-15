@@ -62,8 +62,7 @@ function MyNav() {
     <Navbar style={{ backgroundColor: '#ffc8dd', fontFamily: "'M PLUS Rounded 1c', sans-serif" }} expand="lg">
       <Navbar.Brand>
         <Link to="/" className="nav-link">
-        <i className="fas fa-book" aria-hidden="true"></i>
-          UofTShops
+        <i className="fas fa-book" aria-hidden="true"></i>  Curious Cats Book Nook
         </Link>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />

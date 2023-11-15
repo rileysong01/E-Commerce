@@ -84,7 +84,11 @@ function CategoryMenu({ isOnSearchPage }) {
   return (
     <>
       <div className='link'>
-      <button onClick={() => { handleClick('') }}
+      <button onClick={() => { 
+        if (isOnSearchPage) {
+          navigate('/');
+        }
+        handleClick('') }}
       style={{
         margin: '10px',
         fontFamily: "'M PLUS Rounded 1c', sans-serif", 

@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
 function SearchBar() {
-  // State to manage the search input value
   const [searchValue, setSearchValue] = useState('');
 
-  // Function to handle changes in the search input
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
   };
 
   return (
-    <div>
+    <div style={{ marginTop: '8px',display: 'flex', justifyContent: 'flex-end' }}>
       <input
         type="text"
         placeholder="Search..."
@@ -20,7 +18,7 @@ function SearchBar() {
       />
       <Link to={`/search/:${searchValue}`}>
       <button onClick={() => console.log('search button')}>
-      <span role="img" aria-label="search">🔍</span>
+      <i className="fas fa-search"></i>
       </button>
       </Link>
       

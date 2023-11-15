@@ -1,10 +1,11 @@
 import ProductItem from "../components/ProductItem";
 import ProductFilter from "../components/ProductFilter";
-
+import CategoryMenu from "../components/CategoryMenu";
+import SearchBar from "../components/SearchBar";
 import { useStoreContext } from "../utils/GlobalState";
 import spinner from '../assets/spinner.gif'
 import { useQuery } from '@apollo/client';
-import { QUERY_SALES, QUERY_CATEGORIES} from '../utils/queries';
+import { QUERY_SALES, QUERY_CATEGORIES } from '../utils/queries';
 import { UPDATE_CATEGORIES } from '../utils/actions';
 import { idbPromise } from '../utils/helpers';
 import React from 'react';
@@ -37,7 +38,7 @@ const Sales = () => {
             });
         }
     }, [categoryData, categoriesLoading, dispatch]);
-    
+
     const { loading: salesLoading, data } = useQuery(QUERY_SALES, {
         variables: { categoryID: categoryQuery || null, priceSortOrder: priceSortOrder || null },
     });
@@ -48,47 +49,55 @@ const Sales = () => {
     return (
         <Container fluid>
             <Row>
+      <Col lg={9}>
+        <CategoryMenu isOnSearchPage={true}/>
+      </Col>
+      <Col lg={3}>
+        <SearchBar />
+      </Col>
+    </Row>
+            <Row>
                 <Col lg={3}>
                     <Link to="/"> -- Back to home</Link>
                     <ProductFilter />
                     <Form>
                         Category:
                         <Form.Group>
-                        {categories.map((item) => (
-                                <Form.Check 
-                                key={item._id}
-                                type="checkbox" 
-                                label={item.name}
-                                onClick={() => {
-                                    console.log(item._id)
-                                    console.log(categoryQuery)
-                                    if (categoryQuery.includes(item._id)) {
-                                        setCategoryQuery(categoryQuery.filter(id => id !== item._id));
-                                    } else {
-                                        setCategoryQuery([...categoryQuery, item._id]);
-                                    }
-                                }} /> 
-                        ))}
-                         </Form.Group>
+                            {categories.map((item) => (
+                                <Form.Check
+                                    key={item._id}
+                                    type="checkbox"
+                                    label={item.name}
+                                    onClick={() => {
+                                        console.log(item._id)
+                                        console.log(categoryQuery)
+                                        if (categoryQuery.includes(item._id)) {
+                                            setCategoryQuery(categoryQuery.filter(id => id !== item._id));
+                                        } else {
+                                            setCategoryQuery([...categoryQuery, item._id]);
+                                        }
+                                    }} />
+                            ))}
+                        </Form.Group>
 
 
                     </Form>
                 </Col>
                 <Col lg={9} >
-                <Row className="flex-row">
-        {products.map((product) => (
-          <Col key={product._id} xs={12} sm={6} md={4} lg={3}>
-            <ProductItem
-              _id={product._id}
-              image={product.image}
-              name={product.name}
-              author={product.author}
-              price={product.price}
-              quantity={product.quantity}
-            />
-          </Col>
-        ))}
-      </Row>
+                    <Row className="flex-row">
+                        {products.map((product) => (
+                            <Col key={product._id} xs={12} sm={6} md={4} lg={3}>
+                                <ProductItem
+                                    _id={product._id}
+                                    image={product.image}
+                                    name={product.name}
+                                    author={product.author}
+                                    price={product.price}
+                                    quantity={product.quantity}
+                                />
+                            </Col>
+                        ))}
+                    </Row>
                 </Col>
             </Row>
         </Container>
