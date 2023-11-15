@@ -60,7 +60,7 @@ function MyNav() {
 
   return (
     <div style={{ textAlign: 'center', paddingTop: '10px' }}>
-      <Navbar style={{ backgroundColor: '#ffc8dd', fontFamily: "'M PLUS Rounded 1c', sans-serif" }} expand="lg">
+      <Navbar style={{ backgroundColor: '#ffc8dd', fontFamily: "'M PLUS Rounded 1c', sans-serif", height:'40px' }} expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           {showNavigation()}
@@ -68,7 +68,7 @@ function MyNav() {
         {isAdmin ? null : <Cart />}
       </Navbar>
   
-      <Link to="/" className="nav-link" style={{ fontSize: '24px', display: 'inline-block', margin: '10px' }}>
+      <Link to="/" className="nav-link" style={{ fontSize: '200%', display: 'inline-block', margin: '10px', color:'#3A405A' }}>
         <i className="fas fa-book" aria-hidden="true"></i> Curious Cats Book Nook
       </Link>
     </div>

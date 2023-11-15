@@ -78,10 +78,16 @@ function ProductItem(item) {
           borderRadius: '5px',
           padding: '10px',
           cursor: 'pointer',
-          transition: 'background-color 0.3s ease',
+          transition: 'background-color 0.3s ease, color 0.3s ease', 
         }}
-        onMouseOver={(e) => (e.target.style.backgroundColor = '#cdb4db')}
-        onMouseOut={(e) => (e.target.style.backgroundColor = '')}
+        onMouseOver={(e) => {
+          e.target.style.backgroundColor = '#cdb4db';
+          e.target.style.color = 'white'; 
+        }}
+        onMouseOut={(e) => {
+          e.target.style.backgroundColor = '';
+          e.target.style.color = 'black'; 
+        }}
       >
         Add to Cart
       </button>

@@ -12,6 +12,7 @@ import React from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import Announcements from "../components/Announcements";
 
 const Sales = () => {
     const [categoryQuery, setCategoryQuery] = useState([]);
@@ -43,25 +44,48 @@ const Sales = () => {
         variables: { categoryID: categoryQuery || null, priceSortOrder: priceSortOrder || null },
     });
 
-    console.log(data);
+    console.log(state);
     const products = data?.getSales || [];
 
     return (
         <Container fluid>
             <Row>
-      <Col lg={9}>
-        <CategoryMenu isOnSearchPage={true}/>
-      </Col>
-      <Col lg={3}>
-        <SearchBar />
-      </Col>
-    </Row>
+                <Col lg={9}>
+                    <CategoryMenu isOnSearchPage={true} />
+                </Col>
+                <Col lg={3}>
+                    <SearchBar />
+                </Col>
+            </Row>
+            <Row>
+                <Announcements />
+            </Row>
             <Row>
                 <Col lg={3}>
-                    <Link to="/"> -- Back to home</Link>
+                    <Link to="/">
+                        <button style={{ fontSize: '130%' }}> <i className="fas fa-chevron-left"></i> Back to products </button>
+                    </Link>
                     <ProductFilter />
-                    <Form>
-                        Category:
+                    <Form style={{ padding: '5%' }}>
+                        <hr
+                            style={{
+                                border: 'none',
+                                borderBottom: '2px solid #000',
+                                bottom: '0',
+                                width: '100%',
+                                margin: 0
+                            }}
+                        />
+                        <p style={{ marginTop: '3%', marginBottom: '3%' }}>Category</p>
+                        <hr
+                            style={{
+                                border: 'none',
+                                borderBottom: '2px solid #000',
+                                bottom: '0',
+                                width: '100%',
+                                margin: 0
+                            }}
+                        />
                         <Form.Group>
                             {categories.map((item) => (
                                 <Form.Check

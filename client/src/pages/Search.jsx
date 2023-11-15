@@ -26,6 +26,7 @@ function Search() {
       <Row>
         <Col lg={3}>
           <ProductFilter />
+          
         </Col>
         <Col lg={9}>
           <SearchProductList searchQuery={query.substring(1)} />

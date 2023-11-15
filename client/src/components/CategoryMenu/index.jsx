@@ -72,14 +72,26 @@ function CategoryMenu({ isOnSearchPage }) {
   };
 
   const handleDeleteCategory = async (categoryID) => {
-  const {data} = await deleteCategory({
-    variables: {
-      categoryId: categoryID
+    try {
+      const { data } = await deleteCategory({
+        variables: {
+          categoryId: categoryID
+        }
+      });
+  
+      console.log('Deleted category:', data.deleteCategory);
+
+      const updatedCategories = categories.filter(category => category._id !== categoryID);
+      dispatch({
+        type: UPDATE_CATEGORIES,
+        categories: updatedCategories,
+      });
+      idbPromise('categories', 'put', updatedCategories);
+    } catch (error) {
+      console.error('Error deleting category:', error.message);
     }
-  })
-  console.log('deleted' + data.deleteCategory)
-  refetch();
-  }
+  };
+  
 
   return (
     <>

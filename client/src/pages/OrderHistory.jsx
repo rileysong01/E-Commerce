@@ -30,11 +30,13 @@ function OrderHistory() {
 
   return (
     <Container className="my-1">
-      <Link to="/">← Back to Products</Link>
+      <Link to="/">
+        <button style={{ fontSize: '130%' }}> <i className="fas fa-chevron-left"></i> Back to products </button>
+      </Link>
 
       {user ? (
         <>
-          <h2>View All Orders</h2>
+          <h2>All Orders {user.firstName} for {user.lastName}</h2>
           {user.orders.map((order) => (
             <div key={order._id} className="my-2">
               <h3>{new Date(parseInt(order.purchaseDate)).toLocaleDateString()}</h3>

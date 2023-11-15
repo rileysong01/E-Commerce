@@ -18,6 +18,10 @@ import spinner from '../assets/spinner.gif';
 import AuthService from '../utils/auth';
 import { useMutation } from '@apollo/client';
 import { DELETE_PRODUCT } from '../utils/mutations';
+import Announcements from '../components/Announcements';
+import CategoryMenu from '../components/CategoryMenu';
+import SearchBar from '../components/SearchBar';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const isAdmin = AuthService.checkAdmin();
 
@@ -115,24 +119,37 @@ function Detail() {
   }
   const [deleteProduct] = useMutation(DELETE_PRODUCT);
   const handleDeleteProduct = () => {
-      deleteProduct({
-          variables: {
-              id: currentProduct._id
-          }
-      }) .then((response) => {
-          console.log('Product deleted:', response);
-          window.location.href = '/';
-      })
+    deleteProduct({
+      variables: {
+        id: currentProduct._id
+      }
+    }).then((response) => {
+      console.log('Product deleted:', response);
+      window.location.href = '/';
+    })
       .catch((error) => {
-          console.error('delete failed:', error);
+        console.error('delete failed:', error);
       });
   }
 
   return (
-    <>
+    <Container fluid>
+      <Row>
+        <Col lg={9}>
+          <CategoryMenu isOnSearchPage={true}/>
+        </Col>
+        <Col lg={3}>
+          <SearchBar />
+        </Col>
+      </Row>
+      <Row>
+        <Announcements />
+      </Row>
       {currentProduct && cart ? (
         <div className="container my-1">
-          <Link to="/">← Back to Products</Link>
+          <Link to="/">
+                       <button style={{fontSize:'130%'}}> <i className="fas fa-chevron-left"></i> Back to products </button>
+                    </Link>
 
           <div style={{ display: 'flex' }}>
             <div style={{ flex: 1 }}>
@@ -143,7 +160,7 @@ function Detail() {
               />
             </div>
 
-            <div style={{ flex: 1, marginLeft: '20px',display: 'flex', flexDirection: 'column', justifyContent: 'space-between'  }}>
+            <div style={{ flex: 1, marginLeft: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <h2>{currentProduct.name}</h2>
               <h4>By: {currentProduct.author}</h4>
               <p>{currentProduct.description}</p>
@@ -169,7 +186,22 @@ function Detail() {
                 </>
               ) : (
                 <>
-                  <button onClick={addToCart}>Add to Cart</button>
+                  <button onClick={addToCart}
+                    style={{
+                      border: '2px solid #cdb4db',
+                      borderRadius: '5px',
+                      padding: '10px',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.3s ease, color 0.3s ease',
+                    }}
+                    onMouseOver={(e) => {
+                      e.target.style.backgroundColor = '#cdb4db';
+                      e.target.style.color = 'white';
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.backgroundColor = '';
+                      e.target.style.color = 'black';
+                    }}>Add to Cart</button>
                   <button
                     disabled={!cart.find((p) => p._id === currentProduct._id)}
                     onClick={removeFromCart}
@@ -183,7 +215,7 @@ function Detail() {
         </div>
       ) : null}
       {loading ? <img src={spinner} alt="loading" /> : null}
-    </>
+    </Container>
   );
 }
 
