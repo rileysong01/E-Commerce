@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './style.css';
 
 function Announcements() {
-  const announcements = ['announcement 1', 'announcement 2', 'announcement 3'];
+  const announcements = ['🎉 Happy demo day! 🎉', '⏰ Early Black Friday sale out now! ⏰', '📖 A book is a gift you can open again and again! 📖'];
   const [currentAnnouncementIndex, setCurrentAnnouncementIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -15,7 +15,7 @@ function Announcements() {
         );
         setIsVisible(true);
       }, 500); 
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [currentAnnouncementIndex, announcements.length]);

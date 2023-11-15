@@ -1,13 +1,18 @@
 .announcement-container {
     overflow: hidden;
-  }
-  
-  .announcement {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #bde0fe;
+    height: 30px;
+}
+
+.announcement {
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
-  }
-  
-  .hidden {
+    margin:0px;
+}
+
+.hidden {
     opacity: 0;
-  }
-  
+}

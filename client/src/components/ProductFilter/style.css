@@ -1,0 +1,10 @@
+
+
+.btn-outline-primary {
+  border: 2px solid #cdb4db !important;
+  border-radius: 5px;
+
+  --bs-btn-color: black !important;
+  --bs-btn-active-bg: #cdb4db !important;
+  --bs-btn-hover-bg: #cdb4db !important;
+}

@@ -59,19 +59,21 @@ function MyNav() {
   }
 
   return (
-    <Navbar style={{ backgroundColor: '#ffc8dd', fontFamily: "'M PLUS Rounded 1c', sans-serif" }} expand="lg">
-      <Navbar.Brand>
-        <Link to="/" className="nav-link">
-        <i className="fas fa-book" aria-hidden="true"></i>  Curious Cats Book Nook
-        </Link>
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        {showNavigation()}
-      </Navbar.Collapse>
-      {isAdmin ? null : <Cart /> }
-    </Navbar>
+    <div style={{ textAlign: 'center', paddingTop: '10px' }}>
+      <Navbar style={{ backgroundColor: '#ffc8dd', fontFamily: "'M PLUS Rounded 1c', sans-serif" }} expand="lg">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          {showNavigation()}
+        </Navbar.Collapse>
+        {isAdmin ? null : <Cart />}
+      </Navbar>
+  
+      <Link to="/" className="nav-link" style={{ fontSize: '24px', display: 'inline-block', margin: '10px' }}>
+        <i className="fas fa-book" aria-hidden="true"></i> Curious Cats Book Nook
+      </Link>
+    </div>
   );
+  
 }
 
 export default MyNav;

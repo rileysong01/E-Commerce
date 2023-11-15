@@ -42,7 +42,7 @@ function ProductItem(item) {
   }
 
   return (
-    <div className="card px-1 py-1" style={{ textAlign: 'center' }}>
+    <div className="card px-1 py-1" style={{ textAlign: 'center', marginTop: '10px' }}>
       <Link to={`/products/${_id}`} style={{ textDecoration: 'none', color: 'black' }}>
         <div style={{ position: 'relative', width: '100%', paddingTop: '150%' }}>
           <img
@@ -62,16 +62,30 @@ function ProductItem(item) {
           display: '-webkit-box',
           WebkitLineClamp: 2,
           WebkitBoxOrient: 'vertical',
-          whiteSpace: 'normal',  
-          lineHeight:'19px'
+          whiteSpace: 'normal',
+          lineHeight: '19px'
         }}>
           {name}
         </p>
       </Link>
       <div>
-      <p style={{ fontSize: '17px', marginBottom: '10px' }}>${price}</p>
+        <p style={{ fontSize: '17px', marginBottom: '10px' }}>${price}</p>
       </div>
-      <button onClick={addToCart}>Add to cart</button>
+      <button
+        onClick={addToCart}
+        style={{
+          border: '2px solid #cdb4db',
+          borderRadius: '5px',
+          padding: '10px',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s ease',
+        }}
+        onMouseOver={(e) => (e.target.style.backgroundColor = '#cdb4db')}
+        onMouseOut={(e) => (e.target.style.backgroundColor = '')}
+      >
+        Add to Cart
+      </button>
+
     </div>
   );
 }
