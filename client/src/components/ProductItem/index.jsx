@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import { pluralize } from "../../utils/helpers"
 import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
+import AuthService from '../../utils/auth';
 import { idbPromise } from "../../utils/helpers";
+
+const isAdmin = AuthService.checkAdmin();
 
 
 function ProductItem(item) {
@@ -71,7 +74,8 @@ function ProductItem(item) {
       <div>
         <p style={{ fontSize: '17px', marginBottom: '10px' }}>${price}</p>
       </div>
-      <button
+      {isAdmin ? null:
+       <button
         onClick={addToCart}
         style={{
           border: '2px solid #cdb4db',
@@ -90,7 +94,7 @@ function ProductItem(item) {
         }}
       >
         Add to Cart
-      </button>
+      </button>}
 
     </div>
   );
