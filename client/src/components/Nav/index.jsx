@@ -29,7 +29,7 @@ function MyNav() {
           </Nav.Item>
           <Nav.Item className="mx-1">
             <Link to="/contact" className="nav-link">
-              Contact Us
+              About Us
             </Link>
           </Nav.Item>
 

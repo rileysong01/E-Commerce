@@ -36,7 +36,7 @@ function OrderHistory() {
 
       {user ? (
         <>
-          <h2 style={{ marginBottom: '3%', marginTop: '3%' }}>All Orders {user.firstName} for {user.lastName}</h2>
+          <h2 style={{ marginBottom: '3%', marginTop: '3%' }}>All Orders for {user.firstName}  {user.lastName}</h2>
           {user.orders.map((order) => (
             <Row className="order-row my-2" key={order._id} style={{ border: '1px solid black', borderRadius: '5px', padding: '10px' }}>
               {/* Products in a 9-column grid */}

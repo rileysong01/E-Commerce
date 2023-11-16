@@ -101,44 +101,59 @@ function CategoryMenu({ isOnSearchPage }) {
           navigate('/');
         }
         handleClick('') }}
-      style={{
-        margin: '10px',
-        fontFamily: "'M PLUS Rounded 1c', sans-serif", 
-      }}>
+        style={{
+          margin: '10px',
+          fontFamily: "'M PLUS Rounded 1c', sans-serif",
+          transition: 'color 0.3s ease', 
+          color: 'black', // 
+        }}
+        onMouseOver={(e) => (e.target.style.color = '#cdb4db')}
+        onMouseOut={(e) => (e.target.style.color = 'black')}
+        >
           ALL
         </button>
         {categories.map((item) => (
           <button
-            key={item._id}
-            onClick={() => {
-              if (isOnSearchPage) {
-                navigate('/');
-              }
-              handleClick(item._id);
-            }}
-            style={{
-              margin: '10px',
-              fontFamily: "'M PLUS Rounded 1c', sans-serif", 
-            }}
-          >
-            {(item.name).toUpperCase()}
-            {isAdmin ? (
-              <>
-              <button  onClick={(e) => {
-              e.stopPropagation(); 
-              handleDeleteCategory(item._id);}}>
-              <i className="fas fa-trash-alt"></i>
+          key={item._id}
+          onClick={() => {
+            if (isOnSearchPage) {
+              navigate('/');
+            }
+            handleClick(item._id);
+          }}
+          style={{
+            margin: '10px',
+            fontFamily: "'M PLUS Rounded 1c', sans-serif",
+            transition: 'color 0.3s ease', 
+            color: 'black', 
+          }}
+          onMouseOver={(e) => (e.target.style.color = '#cdb4db')}
+          onMouseOut={(e) => (e.target.style.color = 'black')}
+        >
+          {(item.name).toUpperCase()}
+          {isAdmin ? (
+            <>
+              <button onClick={(e) => {
+                e.stopPropagation();
+                handleDeleteCategory(item._id);
+              }}>
+                <i className="fas fa-trash-alt"></i>
               </button>
-              </>
-            ) : null}
-          </button>
+            </>
+          ) : null}
+        </button>
         ))}
         <Link to="/sales">
           <button
           style={{
             margin: '10px',
-            fontFamily: "'M PLUS Rounded 1c', sans-serif", 
-          }}>
+            fontFamily: "'M PLUS Rounded 1c', sans-serif",
+            transition: 'color 0.3s ease', 
+            color: 'black', // 
+          }}
+          onMouseOver={(e) => (e.target.style.color = '#cdb4db')}
+          onMouseOut={(e) => (e.target.style.color = 'black')}
+          >
             SALES
           </button>
         </Link>
