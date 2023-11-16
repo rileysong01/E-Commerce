@@ -82,20 +82,44 @@ const Cart = () => {
   return (
     <div className="cart">
       <button className="close" onClick={toggleCart} style={{ fontSize: '30px' }}>
-      <i className="fas fa-times"></i>
+        <i className="fas fa-times"></i>
       </button>
       <h2>Shopping Cart</h2>
+      <hr
+        style={{
+          border: 'none',
+          borderBottom: '2px solid #000',
+          bottom: '0',
+          width: '100%',
+          margin: 0
+        }}
+      />
       {state.cart.length ? (
-        <div>
+        <div style={{ textAlign: 'left' }}>
           {state.cart.map((item) => (
             <CartItem key={item._id} item={item} />
           ))}
 
-          <div className="flex-row space-between">
+          <div className="d-flex justify-content-between">
             <strong>Total: ${calculateTotal()}</strong>
 
             {Auth.loggedIn() ? (
-              <button onClick={submitCheckout}>Checkout</button>
+              <button onClick={submitCheckout}
+              style={{
+                border: '2px solid #cdb4db',
+                borderRadius: '5px',
+ 
+                cursor: 'pointer',
+                transition: 'background-color 0.3s ease, color 0.3s ease',
+              }}
+              onMouseOver={(e) => {
+                e.target.style.backgroundColor = '#cdb4db';
+                e.target.style.color = 'white';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.backgroundColor = '';
+                e.target.style.color = 'black';
+              }}>Checkout</button>
             ) : (
               <span>(log in to check out)</span>
             )}
@@ -103,9 +127,6 @@ const Cart = () => {
         </div>
       ) : (
         <h3>
-          <span role="img" aria-label="shocked">
-            😱
-          </span>
           You haven't added anything to your cart yet!
         </h3>
       )}

@@ -54,11 +54,9 @@ const CartItem = ({ item }) => {
             onChange={onChange}
           />
           <span
-            role="img"
-            aria-label="trash"
             onClick={() => removeFromCart(item)}
           >
-            🗑️
+            <i className="fas fa-trash-alt"></i>
           </span>
         </div>
       </div>

@@ -167,7 +167,22 @@ function Detail() {
               <strong>Price: ${currentProduct.price}{' '}</strong>
               {isAdmin ? (
                 <>
-                  <button onClick={openEditModal}>Edit Product Details</button>
+                  <button onClick={openEditModal}
+                  style={{
+                    border: '2px solid #cdb4db',
+                    borderRadius: '5px',
+                    padding: '10px',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.3s ease, color 0.3s ease', 
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.backgroundColor = '#cdb4db';
+                    e.target.style.color = 'white'; 
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.backgroundColor = '';
+                    e.target.style.color = 'black'; 
+                  }}>Edit Product Details</button>
                   {isEditModalOpen && (
                     <EditProductDetails
                       currentProduct={currentProduct}
@@ -175,7 +190,22 @@ function Detail() {
                       refreshPage={refreshPage}
                     />
                   )}
-                  <button onClick={openDeleteConfirmation}>Delete Product</button>
+                  <button onClick={openDeleteConfirmation}
+                  style={{
+                    border: '2px solid #cdb4db',
+                    borderRadius: '5px',
+                    padding: '10px',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.3s ease, color 0.3s ease', 
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.backgroundColor = '#cdb4db';
+                    e.target.style.color = 'white'; 
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.backgroundColor = '';
+                    e.target.style.color = 'black'; 
+                  }}>Delete Product</button>
                   {isDeleteConfirmationOpen && (
                     <DeleteConfirmation
                       currentProduct={currentProduct}

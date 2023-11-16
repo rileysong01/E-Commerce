@@ -105,7 +105,7 @@ function CategoryMenu({ isOnSearchPage }) {
           margin: '10px',
           fontFamily: "'M PLUS Rounded 1c', sans-serif",
           transition: 'color 0.3s ease', 
-          color: 'black', // 
+          color: 'black', 
         }}
         onMouseOver={(e) => (e.target.style.color = '#cdb4db')}
         onMouseOut={(e) => (e.target.style.color = 'black')}

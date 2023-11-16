@@ -71,7 +71,21 @@ function ProductList() {
     <div className="my-2">
       {isAdmin ? (
         <>
-          <button onClick={openAddModal}>Add Product</button>
+          <button onClick={openAddModal} style={{
+          border: '2px solid #cdb4db',
+          borderRadius: '5px',
+          padding: '10px',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s ease, color 0.3s ease', 
+        }}
+        onMouseOver={(e) => {
+          e.target.style.backgroundColor = '#cdb4db';
+          e.target.style.color = 'white'; 
+        }}
+        onMouseOut={(e) => {
+          e.target.style.backgroundColor = '';
+          e.target.style.color = 'black'; 
+        }}>Add Product</button>
           {isAddModalOpen && (
             <AddProduct
               closeEditModal={closeAddModal}
@@ -98,7 +112,7 @@ function ProductList() {
         ))}
       </Row>
       ) : (
-        <h3>You haven't added any products yet!</h3>
+        <h3>No products found!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </div>

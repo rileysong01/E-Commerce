@@ -4,6 +4,7 @@ import CategoryMenu from '../components/CategoryMenu';
 import SearchProductList from '../components/SearchProductList';
 import ProductFilter from '../components/ProductFilter';
 import SearchBar from '../components/SearchBar';
+import Announcements from '../components/Announcements';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Search() {
@@ -21,6 +22,7 @@ function Search() {
           <Col lg={3}>
             <SearchBar />
           </Col>
+          <Announcements/>
         </Row>
       </Container>
       <Row>
