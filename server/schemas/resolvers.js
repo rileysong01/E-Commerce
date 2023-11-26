@@ -331,7 +331,7 @@ const resolvers = {
 
 
     // update product info // admin auth
-    updateProduct: async (parent, { _id, name, quantity, description, price, sale, tags, salePrice }, context) => {
+    updateProduct: async (parent, { _id, name, quantity, description, price, sale, category, tags, salePrice }, context) => {
       if (context.user.admin) {
         try {
           const updatedProduct = await Product.findByIdAndUpdate(
@@ -345,6 +345,7 @@ const resolvers = {
                 sale: sale !== undefined ? sale : null,
                 tags: tags !== undefined ? tags : null,
                 salePrice: salePrice !== undefined ? salePrice : null,
+                category: category !== undefined? category: null,
               },
             },
             { new: true }

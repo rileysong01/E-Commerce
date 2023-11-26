@@ -72,8 +72,8 @@ export const ADD_PRODUCT = gql`
 
 export const UPDATE_PRODUCT_DETAILS = gql`
   mutation updateProduct(
-    $id: ID!, $name: String, $description: String, $quantity: Int, $price: Float, $sale: Boolean, $salePrice: Float, $tags: [String]) {
-      updateProduct(_id: $id, name: $name, quantity: $quantity, description: $description, price: $price, sale: $sale, salePrice: $salePrice, tags: $tags) {
+    $id: ID!, $name: String, $description: String, $quantity: Int, $price: Float, $sale: Boolean, $category: String, $salePrice: Float, $tags: [String]) {
+      updateProduct(_id: $id, name: $name, quantity: $quantity, description: $description, price: $price, category: $category, sale: $sale, salePrice: $salePrice, tags: $tags) {
         _id
         name
         author

@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { UPDATE_PRODUCT_DETAILS } from '../../utils/mutations';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { QUERY_CATEGORIES } from '../../utils/queries';
 
 function EditProductDetails({ currentProduct, refreshPage, closeEditModal }) {
-    console.log(currentProduct)
+    const { loading, data } = useQuery(QUERY_CATEGORIES)
+
     const [editedName, setEditedName] = useState(currentProduct.name);
     const [editedDescription, setEditedDescription] = useState(currentProduct.description);
     const [editedPrice, setEditedPrice] = useState(currentProduct.price);
     const [editedQuantity, setEditedQuantity] = useState(currentProduct.quantity);
     const [editedSale, setEditedSale] = useState(currentProduct.sale);
     const [editedTags, setEditedTags] = useState(currentProduct.tags.join(', '))
+    const [editedCategory, setEditedCategory] = useState(currentProduct.category.name);
 
     const [updateProduct] = useMutation(UPDATE_PRODUCT_DETAILS);
 
@@ -35,12 +39,17 @@ function EditProductDetails({ currentProduct, refreshPage, closeEditModal }) {
         setEditedTags(e.target.value);
     }
 
+    const handleCategoryChange = (e) => {
+        console.log(currentProduct.category.name)
+        setEditedCategory(e.target.value);
+    };
+
     const handleSaveClick = () => {
 
         updateProduct({
             variables: {
                 id: currentProduct._id,
-
+                category: editedCategory,
                 name: editedName,
                 description: editedDescription,
                 price: parseFloat(editedPrice),
@@ -88,6 +97,22 @@ function EditProductDetails({ currentProduct, refreshPage, closeEditModal }) {
                             value={editedPrice}
                             onChange={handlePriceChange}
                         />
+                    </Form.Group>
+                    <Form.Group controlId="category">
+                        <Form.Label>Category:</Form.Label>
+                        <Form.Control as="select" value={editedCategory} onChange={handleCategoryChange}>
+                            <option value="">{currentProduct.category.name}</option> {/* Default option */}
+
+                            {loading ? (
+                                <option>Loading categories...</option>
+                            ) : (
+                                data.categories.map((category) => (
+                                    <option key={category._id} value={category._id}>
+                                        {category.name}
+                                    </option>
+                                ))
+                            )}
+                        </Form.Control>
                     </Form.Group>
                     <Form.Group controlId="editedQuantity">
                         <Form.Label>Quantity:</Form.Label>
